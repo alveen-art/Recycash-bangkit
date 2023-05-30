@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model plastic_point {
+  id_data_point Int     @id @default(autoincrement())
+  plastic_point String  @db.VarChar(100)
+  plastic_code  String  @db.VarChar(100)
+  id_user       String? @db.VarChar(100)
+}
+
+model poin {
+  id_poin                 Int    @id @default(autoincrement())
+  point_amount            Int
+  poin_type               String @db.VarChar(100)
+  id_user                 Int?
+  user_poin_id_userTouser user?  @relation("poin_id_userTouser", fields: [id_user], references: [id_user], onUpdate: Restrict, map: "poin_FK")
+
+  @@index([id_user], map: "poin_FK")
+}
+
+model user {
+  id_user                 Int    @id @default(autoincrement())
+  name                    String @db.VarChar(100)
+  email                   String @db.VarChar(100)
+  phone_number            String @db.VarChar(100)
+  password                String @db.VarChar(100)
+  total_point             Int?
+  poin_poin_id_userTouser poin[] @relation("poin_id_userTouser")
+}
