@@ -2,7 +2,8 @@
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const {verifyToken,generateToken} = require('./jwt');
+const {getiduser} = require('./bridging');
+const {generateToken} = require('./jwt');
 const prisma = new PrismaClient();
 
 
@@ -91,11 +92,14 @@ async function login (request,h){
 async function getProfile (request,h) {
   
   try {
-    const userId = request.params.id;
+   // const userId = request.params.id;
+    const user = await getiduser(request, h);
+    // Panggil fungsi di sini
+    console.log(user);
 
-    const user = await prisma.user.findUnique({
+    const userdata = await prisma.user.findUnique({
       where: {
-        id_user: parseInt(userId),
+        id_user: parseInt(user.id_user),
       },
       select: {
         name: true,
@@ -103,9 +107,8 @@ async function getProfile (request,h) {
         phone_number: true
       },
     });
-    console.log(userId);
-    console.log(user);
-    return user;
+
+    return userdata;
   } catch (error) {
     console.error(error);
     throw new Error('Failed to get profile');

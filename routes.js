@@ -16,7 +16,7 @@ const routes = [
     },
     { // fungsi untuk memanggil data nama serta email pada halaman profile
         method: 'GET',
-        path: '/user/{id}',
+        path: '/user',
         handler: getProfile,
     },
     { 
@@ -37,7 +37,7 @@ const routes = [
         handler: getAllPoint,
     },
     { 
-        method: 'POST',
+        method: 'PUT',
         path: '/totalpoint',
         handler: totalpoint,
         options: {
