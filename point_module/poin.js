@@ -136,6 +136,7 @@ async function getpoint(request, h) {
         },
         select: {
           total_point: true,
+          name: true
         },
       });
       
