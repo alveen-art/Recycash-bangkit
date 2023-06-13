@@ -13,6 +13,7 @@ async function getpoint(request, h) {
       //const y = jwt.decode(authHeader);
       //const email = y.userId.email;
       const user = await getiduser(request, h);
+      const createdAt = new Date();
  // Panggil fungsi di sini
  console.log(user);
       
@@ -33,6 +34,7 @@ async function getpoint(request, h) {
           data: {
             point_amount: parseInt(point.plastic_point),
             poin_type: 'getpoint',
+            date: createdAt,
             id_user:user.id_user
           },
         });
@@ -156,7 +158,8 @@ async function getpoint(request, h) {
         },
         select: {
           point_amount: true,
-          poin_type: true
+          poin_type: true,
+          date: true
         },
       });
      
